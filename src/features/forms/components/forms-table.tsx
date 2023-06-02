@@ -5,6 +5,7 @@ import {
 import { Pagination, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SkeletonPlaceholder from "../../core/components/skeleton-placeholder";
 import listFormsService from "../services/list-forms-service";
 import { FormType } from "../types/form-type";
 
@@ -65,7 +66,7 @@ export default function FormsTable() {
   return (
     <div>
       {loading ? (
-        <div className="flex items-center w-full">Carregando...</div>
+        <SkeletonPlaceholder width={600} height={600} />
       ) : (
         <div className="flex items-center justify-center">
           <div className="my-8 border-2 border-blue-200 rounded-lg">
@@ -101,7 +102,7 @@ export default function FormsTable() {
                               form &&
                               navigate(`/questionarios/editar/${form.cod}`)
                             }
-                            className="border-2 border-r-blue-200 border-y-blue-200 w-24  hover:cursor-pointer hover:bg-blue-200"
+                            className="border-2 border-r-blue-200 border-y-blue-200 w-24 hover:cursor-pointer hover:bg-blue-200"
                           >
                             {form && (
                               <PencilIcon
