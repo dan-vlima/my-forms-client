@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Column from "../../core/components/column";
 import Row from "../../core/components/row";
-import { useToast } from "../../core/hooks/use-toast";
+
+import toast from "react-hot-toast";
 import answerFormService from "../services/answer-form-service";
 import findFormService from "../services/find-form-service";
 import { FormType } from "../types/form-type";
@@ -25,7 +26,6 @@ export default function QuestionsResponseForm({
 }: QuestionsResponseFormProps) {
   const { register, handleSubmit } = useForm<Record<string, string>>();
   const [form, setForm] = React.useState<FormType | null>(null);
-  const { showSuccess, showError } = useToast();
 
   const navigate = useNavigate();
 
@@ -57,11 +57,11 @@ export default function QuestionsResponseForm({
         await Promise.all(
           respostas.map((resposta) => answerFormService(form.cod, resposta))
         );
-        showSuccess({ message: "Questionário respondido com sucesso!" });
+        toast.success("Questionário respondido com sucesso!");
         navigate("/questionarios");
       }
     } catch (error: any) {
-      showError({ message: error.message });
+      toast.error(error.message);
       console.error(error);
     }
   };

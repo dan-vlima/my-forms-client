@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ToastProvider } from "react-toast-notifications";
 import App from "./App";
 import queryClient from "./config/query-client";
 import "./index.css";
@@ -45,11 +45,30 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ToastProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ToastProvider>
+    <Toaster
+      position="top-right"
+      reverseOrder={false}
+      gutter={8}
+      containerClassName=""
+      containerStyle={{}}
+      toastOptions={{
+        className: "",
+        duration: 5000,
+        error: {
+          style: {
+            backgroundColor: "#fecaca",
+          },
+        },
+        success: {
+          style: {
+            backgroundColor: "#dcfce7",
+          },
+        },
+      }}
+    />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

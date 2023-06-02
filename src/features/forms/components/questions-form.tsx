@@ -2,10 +2,10 @@ import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton, Input, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import Column from "../../core/components/column";
 import Row from "../../core/components/row";
-import { useToast } from "../../core/hooks/use-toast";
 import createFormService from "../services/create-form-service";
 import editFormService from "../services/edit-form-service";
 import { QuestionType } from "../types/question-type";
@@ -17,7 +17,6 @@ export default function QuestionsForm({
   initialValues?: any;
   isEditing?: boolean;
 }) {
-  const { showSuccess, showError } = useToast();
   const { formId } = useParams();
   const navigate = useNavigate();
 
@@ -63,19 +62,15 @@ export default function QuestionsForm({
     try {
       if (isEditing && formId) {
         await editFormService(formId, questionario);
-
-        showSuccess({ message: "Questionário editado com sucesso!" });
-
+        toast.success("Questionário editado com sucesso!");
         navigate("/questionarios");
       } else {
         await createFormService(questionario);
-
-        showSuccess({ message: "Questionário criado com sucesso!" });
-
+        toast.success("Questionário criado com sucesso!");
         navigate("/questionarios");
       }
     } catch (error: any) {
-      showError({ message: error.message });
+      toast.error(error.message);
     }
   };
 
